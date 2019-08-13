@@ -1,0 +1,11 @@
+::sysinit:/System/Boot/startup
+
+tty1::respawn:getty 38400 tty1
+tty2::respawn:getty 38400 tty2
+tty3::respawn:getty 38400 tty3
+tty4::respawn:getty 38400 tty4
+tty5::respawn:getty 38400 tty5
+tty6::respawn:getty 38400 tty6
+
+::shutdown:/System/Boot/shutdown
+::ctrlaltdel:/System/Index/Binaries/reboot
