@@ -94,7 +94,7 @@ CONFIG_CFG80211=y
 #CONFIG_UEVENT_HELPER_PATH="/sbin/hotplug"
 
 CONFIG_EXTRA_FIRMWARE="mrvl/sd8897_uapsta.bin mrvl/sd8797_uapsta.bin mrvl/sd8787_uapsta.bin"
-CONFIG_EXTRA_FIRMWARE_DIR="/opt/PowerOS/firmware"
+CONFIG_EXTRA_FIRMWARE_DIR="/opt/system/firmware"
 
 CONFIG_NTFS_FS=y
 CONFIG_NTFS_RW=y
