@@ -4,6 +4,7 @@ set -x
 
 #THIS SHOULD BE RUN IN AN ARM64 EMULATED MACHINE
 #bionic-server-cloudimg-arm64.img
+#https://mirrors.wikimedia.org/debian/pool/main/v/vboot-utils/vboot-kernel-utils_0~R63-10032.B-3_arm64.deb
 
 #FETCH NEEDED TOOLS
 apt-get install -y gcc gcc-5-arm-linux-gnueabihf gawk bison wget patch build-essential u-boot-tools bc libncurses5-dev g++-arm-linux-gnueabihf flex texinfo unzip help2man libtool-bin python3 git nano kmod pkg-config autogen autopoint gettext libnl-cli-3-dev device-tree-compiler
