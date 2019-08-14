@@ -26,5 +26,7 @@ cat /opt/system/config/config.chromeos /opt/system/config/config.chromeos.extra 
 cp /opt/wireless-regdb/db.txt /opt/kernel/net/wireless
 make oldconfig
 make prepare
-make CFLAGS="-O2 -s" -j$(nproc) Image
-make CFLAGS="-O2 -s" -j$(nproc) modules
+make -j$(nproc) Image
+make -j$(nproc) modules
+make dtbs
+make -j$(nproc)
