@@ -13,7 +13,7 @@ apt-get install -y gcc-8-aarch64-linux-gnu gcc-8-arm-linux-gnueabihf gawk bison 
 
 #CREATE DIR STRUCTURE
 rm -fr /opt/sysroot/*
-cp -rv /opt/PowerOS/sysroot/* /opt/sysroot
+cp -rv /opt/system/sysroot/* /opt/sysroot
 
 #GET WIFI RULES DATABASE
 cd /opt
@@ -31,10 +31,10 @@ if [ ! -d "/opt/kernel" ]; then
   tar xfv /opt/kernel.tar.gz -C /opt/kernel
 fi
 cd /opt/kernel
-patch -p1 < /opt/PowerOS/patches/linux-3.18-log2.patch
-patch -p1 < /opt/PowerOS/patches/linux-3.18-hide-legacy-dirs.patch
+patch -p1 < /opt/system/patches/linux-3.18-log2.patch
+patch -p1 < /opt/system/patches/linux-3.18-hide-legacy-dirs.patch
 cp include/linux/compiler-gcc5.h include/linux/compiler-gcc8.h
-cat /opt/PowerOS/config/config.chromeos /opt/PowerOS/config/config.chromeos.extra > .config
+cat /opt/system/config/config.chromeos /opt/system/config/config.chromeos.extra > .config
 cp /opt/wireless-regdb/db.txt /opt/kernel/net/wireless
 make oldconfig
 make prepare
@@ -54,11 +54,11 @@ rm -rf /tmp/modules
 
 make INSTALL_DTBS_PATH="/opt/sysroot/Programs/kernel-aarch64/3.18.0-19095-g86596f58eadf/dtbs" dtbs_install
 
-cp /opt/PowerOS/signing/kernel.its .
+cp /opt/system/signing/kernel.its .
 mkimage -D "-I dts -O dtb -p 2048" -f kernel.its vmlinux.uimg
 dd if=/dev/zero of=bootloader.bin bs=512 count=1
 echo "console=tty1 init=/sbin/init root=PARTUUID=%U/PARTNROFF=1 rootwait rw noinitrd" > cmdline
-vbutil_kernel --pack vmlinux.kpart --version 1 --vmlinuz vmlinux.uimg --arch aarch64 --keyblock /opt/PowerOS/signing/kernel.keyblock --signprivate /opt/PowerOS/signing/kernel_data_key.vbprivk --config cmdline --bootloader bootloader.bin
+vbutil_kernel --pack vmlinux.kpart --version 1 --vmlinuz vmlinux.uimg --arch aarch64 --keyblock /opt/system/signing/kernel.keyblock --signprivate /opt/system/signing/kernel_data_key.vbprivk --config cmdline --bootloader bootloader.bin
 mkdir -p /opt/sysroot/Programs/kernel-aarch64/3.18.0-19095-g86596f58eadf/image
 cp vmlinux.kpart /opt/sysroot/Programs/kernel-aarch64/3.18.0-19095-g86596f58eadf/image
 ln -s /Programs/kernel-aarch64/current/image /opt/sysroot/System/Kernel/Image
@@ -81,7 +81,7 @@ cd /opt
 wget https://busybox.net/downloads/busybox-1.30.1.tar.bz2
 tar xfv busybox-1.30.1.tar.bz2
 cd busybox-1.30.1
-cp /opt/PowerOS/config/config.busybox .config
+cp /opt/system/config/config.busybox .config
 echo 'CONFIG_CROSS_COMPILER_PREFIX="arm-linux-gnueabihf-"' >> .config
 make CFLAGS="-O2 -s" -j$(nproc)
 make install
