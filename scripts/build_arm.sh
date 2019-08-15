@@ -262,5 +262,5 @@ link_files /System/Index/Binaries /Programs/blazeos/bin
 #CREATE IMAGE FOR EMULATOR TO USE
 #START EMULATOR AND CONTINUE!
 
-#blaze install make
+#blaze install bison
 
