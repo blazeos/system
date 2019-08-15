@@ -230,6 +230,10 @@ rm -rf /opt/sysroot/Programs/gobohide/0.14/{etc,share}
 
 link_files /System/Index/Binaries /Programs/gobohide/0.14/bin
 
+find /opt/sysroot/Programs/*/current/bin -executable -type f | xargs arm-linux-gnueabihf-strip -s || true
+find /opt/sysroot/Programs/*/current/sbin -executable -type f | xargs arm-linux-gnueabihf-strip -s || true
+find /opt/sysroot/Programs/*/current/libexec -executable -type f | xargs arm-linux-gnueabihf-strip -s || true
+
 #CREATE IMAGE FOR EMULATOR TO USE
 #START EMULATOR AND CONTINUE!
 
