@@ -235,7 +235,7 @@ find /opt/sysroot/Programs/*/current/sbin -executable -type f | xargs arm-linux-
 find /opt/sysroot/Programs/*/current/libexec -executable -type f | xargs arm-linux-gnueabihf-strip -s || true
 
 #blazeos
-git clone https://github.com/blazeos/system.git /opt/sysroot/Programs/blazeos
+git clone https://github.com/blazeos/packages.git /opt/sysroot/Programs/blazeos
 
 link_files /System/Index/Binaries /Programs/blazeos/bin
 
