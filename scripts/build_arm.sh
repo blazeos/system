@@ -211,6 +211,26 @@ link_files /System/Index/Includes /Programs/gcc/8.3.0/include
 link_files /System/Index/Libraries /Programs/gcc/8.3.0/lib
 link_files /System/Index/Libraries/libexec /Programs/gcc/8.3.0/libexec
 
+#make
+cd /opt
+wget http://ftp.twaren.net/Unix/GNU/gnu/make/make-4.2.1.tar.gz
+tar xfv make-4.2.1.tar.gz
+cd make-4.2.1
+sed -i '211,217 d; 219,229 d; 232 d' glob/glob.c
+
+./configure \
+  CFLAGS="-O2 -s --sysroot=/opt/sysroot" \
+  --prefix=/ \
+  --host=arm-linux-gnueabihf
+
+make -j$(nproc)
+make install DESTDIR=/opt/sysroot/Programs/make/4.2.1
+ln -s 4.2.1 /opt/sysroot/Programs/make/current
+rm -rf /opt/sysroot/Programs/make/4.2.1/share
+
+link_files /System/Index/Binaries /Programs/make/4.2.1/bin
+link_files /System/Index/Includes /Programs/make/4.2.1/include
+
 #gobohide (0.14 64bit)
 cd /opt
 wget https://gobolinux.org/older_downloads/GoboHide-0.14.tar.bz2
@@ -241,4 +261,6 @@ link_files /System/Index/Binaries /Programs/blazeos/bin
 
 #CREATE IMAGE FOR EMULATOR TO USE
 #START EMULATOR AND CONTINUE!
+
+#blaze install make
 
