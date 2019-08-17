@@ -4,4 +4,6 @@ time bash system/scripts/build_arm.sh
 
 ##Create arm64 environment
 
-/scripts/create_aarch64_env.sh
+git clone https://github.com/blazeos/system.git
+
+time bash scripts/create_aarch64_env.sh
