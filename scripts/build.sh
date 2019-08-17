@@ -284,8 +284,8 @@ if [ $(arch) == "aarch64" ]; then
   wget https://gobolinux.org/older_downloads/GoboHide-0.14.tar.bz2
   tar xfv GoboHide-0.14.tar.bz2
   cd GoboHide-0.14
-  #wget -O config.guess 'https://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=HEAD'
-  #wget -O config.sub 'https://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.sub;hb=HEAD'
+  wget -O config.guess 'https://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=HEAD'
+  wget -O config.sub 'https://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.sub;hb=HEAD'
   ./configure \
     LDFLAGS="-static" \
     --host=aarch64-linux-gnu \
@@ -296,12 +296,12 @@ if [ $(arch) == "aarch64" ]; then
   rm -rf /opt/sysroot/Programs/gobohide/0.14/{etc,share}
 
   link_files /System/Index/Binaries /Programs/gobohide/0.14/bin
-
-  find /opt/sysroot/Programs/*/current/bin -executable -type f | xargs arm-linux-gnueabihf-strip -s || true
-  find /opt/sysroot/Programs/*/current/sbin -executable -type f | xargs arm-linux-gnueabihf-strip -s || true
-  find /opt/sysroot/Programs/*/current/libexec -executable -type f | xargs arm-linux-gnueabihf-strip -s || true
 else
   echo "GoboHide 1.3"
   #Install using blaze!
 fi
 
+#STRIP BINARIES
+find /opt/sysroot/Programs/*/current/bin -executable -type f | xargs arm-linux-gnueabihf-strip -s || true
+find /opt/sysroot/Programs/*/current/sbin -executable -type f | xargs arm-linux-gnueabihf-strip -s || true
+find /opt/sysroot/Programs/*/current/libexec -executable -type f | xargs arm-linux-gnueabihf-strip -s || true
