@@ -27,7 +27,7 @@ cd /opt
 rm -fr kernel
 mkdir /opt/kernel
 
-if [[ $(arch) = "aarch64" ]]; then
+if [ $(arch) = "aarch64" ]; then
   export HOST="arm-linux-gnueabihf"
   export WIFIVERSION=
   export HEADERS="/opt/sysroot/Programs/kernel-aarch64/3.18.0-19095-g86596f58eadf/headers"
@@ -118,7 +118,7 @@ tar xfv busybox-1.30.1.tar.bz2
 cd busybox-1.30.1
 cp /opt/system/config/config.busybox .config
 
-if [[ $(arch) = "aarch64" ]]; then
+if [ $(arch) = "aarch64" ]; then
   export ARCH=arm
   export CROSS_COMPILE=arm-linux-gnueabihf-  
   echo 'CONFIG_CROSS_COMPILER_PREFIX="arm-linux-gnueabihf-"' >> .config
@@ -243,7 +243,7 @@ make install DESTDIR=/opt/sysroot/Programs/gcc/8.3.0
 rm -rf /opt/sysroot/Programs/gcc/8.3.0/share
 ln -s 8.3.0 /opt/sysroot/Programs/gcc/current
 
-if [[ $(arch) = "aarch64" ]]; then
+if [ $(arch) = "aarch64" ]; then
   ln -s arm-linux-gnueabihf-gcc /opt/sysroot/Programs/gcc/8.3.0/bin/cc
 fi
 
@@ -277,7 +277,7 @@ git clone https://github.com/blazeos/packages.git /opt/sysroot/Programs/blazeos
 
 link_files /System/Index/Binaries /Programs/blazeos/bin
 
-if [[ $(arch) = "aarch64" ]]; then
+if [ $(arch) = "aarch64" ]; then
   #gobohide (0.14 64bit)
   cd /opt
   wget https://gobolinux.org/older_downloads/GoboHide-0.14.tar.bz2
