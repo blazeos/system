@@ -28,6 +28,7 @@ rm -fr kernel
 mkdir /opt/kernel
 
 if [ $(arch) == "aarch64" ]; then
+  export HOST="arm-linux-gnueabihf"
   export WIFIVERSION=
   wget -O /opt/kernel.tar.gz https://chromium.googlesource.com/chromiumos/third_party/kernel/+archive/86596f58eadf.tar.gz
   tar xfv /opt/kernel.tar.gz -C /opt/kernel
@@ -72,7 +73,7 @@ if [ $(arch) == "aarch64" ]; then
   find /opt/sysroot/Programs/kernel-aarch64/3.18.0-19095-g86596f58eadf/headers \( -name .install -o -name ..install.cmd \) -delete
   link_files /System/Index/Includes /Programs/kernel-aarch64/3.18.0-19095-g86596f58eadf/headers  
 else
-  echo "Native build"
+  export HOST="x86_64-linux-gnu"
 fi
 
 #BUSYBOX:
@@ -106,7 +107,7 @@ mkdir build
 cd build
 
 ../configure \
-  --host=arm-linux-gnueabihf \
+  --host=$HOST \
   --prefix= \
   --includedir=/include \
   --libexecdir=/libexec \
@@ -138,3 +139,35 @@ link_files /System/Index/Binaries /Programs/glibc/2.29/bin
 link_files /System/Index/Includes /Programs/glibc/2.29/include
 link_files /System/Index/Libraries /Programs/glibc/2.29/lib
 link_files /System/Index/Binaries /Programs/glibc/2.29/sbin
+
+#BINUTILS
+cd /opt
+wget https://mirrors.dotsrc.org/gnu/binutils/binutils-2.32.tar.xz
+tar xfv binutils-2.32.tar.xz
+cd binutils-2.32
+
+./configure \
+  --host=$HOST \
+  --prefix=/ \
+  --with-sysroot=/ \
+  --with-float=hard \
+  --disable-werror \
+  --disable-multilib \
+  --disable-sim \
+  --disable-gdb \
+  --disable-nls \
+  --disable-static \
+  --enable-ld=default \
+  --enable-gold=yes \
+  --enable-threads \
+  --enable-plugins
+  
+make tooldir=/ -j$(nproc)
+make tooldir=/ install DESTDIR=/opt/sysroot/Programs/binutils/2.32
+rm -rf /opt/sysroot/Programs/binutils/2.32/{share,lib/ldscripts}
+ln -s 2.32 /opt/sysroot/Programs/binutils/current
+
+link_files /System/Index/Binaries /Programs/binutils/2.32/bin
+link_files /System/Index/Includes /Programs/binutils/2.32/include
+link_files /System/Index/Libraries /Programs/binutils/2.32/lib
+
