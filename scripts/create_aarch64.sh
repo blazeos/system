@@ -18,3 +18,5 @@ else
 fi
 
 chroot /opt/debian-aarch64 "/opt/system/scripts/build.sh"
+
+#CHROOT TO NEWLY CREATED SYSROOT AND CONTINUE THE BUILD
