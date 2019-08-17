@@ -30,6 +30,7 @@ mkdir /opt/kernel
 if [ $(arch) == "aarch64" ]; then
   export HOST="arm-linux-gnueabihf"
   export WIFIVERSION=
+  export HEADERS="/opt/sysroot/Programs/kernel-aarch64/3.18.0-19095-g86596f58eadf/headers"
   wget -O /opt/kernel.tar.gz https://chromium.googlesource.com/chromiumos/third_party/kernel/+archive/86596f58eadf.tar.gz
   tar xfv /opt/kernel.tar.gz -C /opt/kernel
   cd /opt/kernel
@@ -74,6 +75,41 @@ if [ $(arch) == "aarch64" ]; then
   link_files /System/Index/Includes /Programs/kernel-aarch64/3.18.0-19095-g86596f58eadf/headers  
 else
   export HOST="x86_64-linux-gnu"
+  export WIFIVERSION=
+  export HEADERS="/opt/sysroot/Programs/kernel-amd64/5.2.3/headers"
+  wget https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.2.3.tar.xz
+  mkdir /opt/kernel
+  tar xfv /opt/linux-5.2.3.tar.xz -C /opt/kernel
+  cd /opt/kernel/linux-5.2.3
+  #patch -p1 < /opt/PowerOS/patches/linux-3.18-log2.patch
+  #patch -p1 < /opt/PowerOS/patches/linux-3.18-hide-legacy-dirs.patch
+  #cp include/linux/compiler-gcc5.h include/linux/compiler-gcc8.h
+  cp /opt/system/config/config.kernel ./.config
+  cp /opt/wireless-regdb/db.txt ./net/wireless
+  make oldconfig
+  make prepare
+  make -j$(nproc)
+
+  make INSTALL_MOD_PATH="/tmp/modules" modules_install
+  rm -f /tmp/modules/lib/modules/*/{source,build}
+  mkdir -p /opt/sysroot/Programs/kernel-amd64/5.2.3/modules
+  cp -rv /tmp/modules/lib/modules/5.2.3/* /opt/sysroot/Programs/kernel-amd64/5.2.3/modules
+  ln -s 5.2.3 /opt/sysroot/Programs/kernel-amd64/current
+  ln -s /Programs/kernel-amd64/5.2.3/modules /opt/sysroot/System/Kernel/Modules/5.2.3
+  rm -rf /tmp/modules
+
+  mkdir -p /opt/sysroot/Programs/kernel-amd64/5.2.3/image
+  cp /opt/kernel/linux-5.2.3/arch/x86/boot/bzImage /opt/sysroot/Programs/kernel-amd64/5.2.3/image
+  ln -s /Programs/kernel-amd64/current/image /opt/sysroot/System/Kernel/Image
+
+  make headers_check
+  make INSTALL_HDR_PATH="/tmp/headers" headers_install
+  mkdir -p /opt/sysroot/Programs/kernel-amd64/5.2.3/headers
+  cp -rv /tmp/headers/include/* /opt/sysroot/Programs/kernel-amd64/5.2.3/headers
+  rm -fr /tmp/headers
+  find /opt/sysroot/Programs/kernel-amd64/5.2.3/headers \( -name .install -o -name ..install.cmd \) -delete
+
+  link_files /System/Index/Includes /Programs/kernel-amd64/5.2.3/headers  
 fi
 
 #BUSYBOX:
@@ -114,7 +150,7 @@ cd build
   --with-__thread \
   --with-tls \
   --with-fp \
-  --with-headers=/opt/sysroot/Programs/kernel-aarch64/3.18.0-19095-g86596f58eadf/headers \
+  --with-headers=$HEADERS \
   --without-cvs \
   --without-gd \
   --enable-kernel=3.18.0 \
@@ -259,6 +295,8 @@ if [ $(arch) == "aarch64" ]; then
   find /opt/sysroot/Programs/*/current/bin -executable -type f | xargs arm-linux-gnueabihf-strip -s || true
   find /opt/sysroot/Programs/*/current/sbin -executable -type f | xargs arm-linux-gnueabihf-strip -s || true
   find /opt/sysroot/Programs/*/current/libexec -executable -type f | xargs arm-linux-gnueabihf-strip -s || true
+else
+  echo "GoboHide 1.3"
 fi
 
 #blazeos
