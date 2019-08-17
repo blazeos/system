@@ -171,3 +171,97 @@ link_files /System/Index/Binaries /Programs/binutils/2.32/bin
 link_files /System/Index/Includes /Programs/binutils/2.32/include
 link_files /System/Index/Libraries /Programs/binutils/2.32/lib
 
+#GCC
+cd /opt
+wget ftp://ftp.fu-berlin.de/unix/languages/gcc/releases/gcc-8.3.0/gcc-8.3.0.tar.xz
+tar xfv gcc-8.3.0.tar.xz
+cd gcc-8.3.0
+./contrib/download_prerequisites
+mkdir build
+cd build
+
+../configure \
+  --host=$HOST \
+  --target=$HOST \
+  --with-sysroot=/ \
+  --with-float=hard \
+  --prefix=/ \
+  --enable-threads=posix \
+  --enable-languages=c,c++ \
+  --enable-__cxa_atexit \
+  --disable-libmudflap \
+  --disable-libssp \
+  --disable-libgomp \
+  --disable-libstdcxx-pch \
+  --disable-nls \
+  --disable-multilib \
+  --disable-libquadmath \
+  --disable-libquadmath-support \
+  --disable-libsanitizer \
+  --disable-libmpx \
+  --disable-gold \
+  --enable-long-long \
+  --disable-static
+
+make -j$(nproc)
+make install DESTDIR=/opt/sysroot/Programs/gcc/8.3.0
+rm -rf /opt/sysroot/Programs/gcc/8.3.0/share
+ln -s 8.3.0 /opt/sysroot/Programs/gcc/current
+
+if [ $(arch) == "aarch64" ]; then
+  ln -s arm-linux-gnueabihf-gcc /opt/sysroot/Programs/gcc/8.3.0/bin/cc
+fi
+
+link_files /System/Index/Binaries /Programs/gcc/8.3.0/bin
+link_files /System/Index/Includes /Programs/gcc/8.3.0/include
+link_files /System/Index/Libraries /Programs/gcc/8.3.0/lib
+link_files /System/Index/Libraries/libexec /Programs/gcc/8.3.0/libexec
+
+#make
+cd /opt
+wget http://ftp.twaren.net/Unix/GNU/gnu/make/make-4.2.1.tar.gz
+tar xfv make-4.2.1.tar.gz
+cd make-4.2.1
+sed -i '211,217 d; 219,229 d; 232 d' glob/glob.c
+
+./configure \
+  CFLAGS="--sysroot=/opt/sysroot" \
+  --prefix=/ \
+  --host=$HOST
+
+make -j$(nproc)
+make install DESTDIR=/opt/sysroot/Programs/make/4.2.1
+ln -s 4.2.1 /opt/sysroot/Programs/make/current
+rm -rf /opt/sysroot/Programs/make/4.2.1/share
+
+link_files /System/Index/Binaries /Programs/make/4.2.1/bin
+link_files /System/Index/Includes /Programs/make/4.2.1/include
+
+if [ $(arch) == "aarch64" ]; then
+  #gobohide (0.14 64bit)
+  cd /opt
+  wget https://gobolinux.org/older_downloads/GoboHide-0.14.tar.bz2
+  tar xfv GoboHide-0.14.tar.bz2
+  cd GoboHide-0.14
+  #wget -O config.guess 'https://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=HEAD'
+  #wget -O config.sub 'https://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.sub;hb=HEAD'
+  ./configure \
+    LDFLAGS="-static" \
+    --host=aarch64-linux-gnu \
+    --prefix=/
+  make -j$(nproc)
+  make install DESTDIR=/opt/sysroot/Programs/gobohide/0.14
+  ln -s 0.14 /opt/sysroot/Programs/gobohide/current
+  rm -rf /opt/sysroot/Programs/gobohide/0.14/{etc,share}
+
+  link_files /System/Index/Binaries /Programs/gobohide/0.14/bin
+
+  find /opt/sysroot/Programs/*/current/bin -executable -type f | xargs arm-linux-gnueabihf-strip -s || true
+  find /opt/sysroot/Programs/*/current/sbin -executable -type f | xargs arm-linux-gnueabihf-strip -s || true
+  find /opt/sysroot/Programs/*/current/libexec -executable -type f | xargs arm-linux-gnueabihf-strip -s || true
+fi
+
+#blazeos
+git clone https://github.com/blazeos/packages.git /opt/sysroot/Programs/blazeos
+
+link_files /System/Index/Binaries /Programs/blazeos/bin
