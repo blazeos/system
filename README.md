@@ -6,4 +6,4 @@ time bash system/scripts/build_arm.sh
 
 git clone https://github.com/blazeos/system.git
 
-time bash scripts/create_aarch64_env.sh
+time bash scripts/create_aarch64.sh
