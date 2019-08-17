@@ -17,4 +17,4 @@ else
   git clone https://github.com/blazeos/system.git /opt/debian-aarch64/opt/system
 fi
 
-chroot /opt/debian-aarch64/ /opt/system/scripts/build_aarch64.sh
+chroot /opt/debian-aarch64 "/opt/system/script/build.sh"
