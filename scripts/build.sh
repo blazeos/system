@@ -273,6 +273,11 @@ rm -rf /opt/sysroot/Programs/make/4.2.1/share
 link_files /System/Index/Binaries /Programs/make/4.2.1/bin
 link_files /System/Index/Includes /Programs/make/4.2.1/include
 
+#blazeos
+git clone https://github.com/blazeos/packages.git /opt/sysroot/Programs/blazeos
+
+link_files /System/Index/Binaries /Programs/blazeos/bin
+
 if [ $(arch) == "aarch64" ]; then
   #gobohide (0.14 64bit)
   cd /opt
@@ -297,9 +302,6 @@ if [ $(arch) == "aarch64" ]; then
   find /opt/sysroot/Programs/*/current/libexec -executable -type f | xargs arm-linux-gnueabihf-strip -s || true
 else
   echo "GoboHide 1.3"
+  #Install using blaze!
 fi
 
-#blazeos
-git clone https://github.com/blazeos/packages.git /opt/sysroot/Programs/blazeos
-
-link_files /System/Index/Binaries /Programs/blazeos/bin
