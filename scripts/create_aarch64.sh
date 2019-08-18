@@ -29,9 +29,9 @@ mount --rbind /dev dev/
 chroot /opt/debian-aarch64/opt/sysroot "/Users/root/system/scripts/build_chroot.sh"
 
 cd /opt/debian-aarch64/opt/sysroot
-unmount System/Kernel/Status/
-unmount System/Kernel/Hardware/
-unmount dev/
+umount System/Kernel/Status/
+umount System/Kernel/Hardware/
+umount dev/
 
 rm -rf /opt/debian-aarch64/opt/sysroot/Users/root/system
 rm -rf /opt/debian-aarch64/opt/sysroot/Programs/blazeos/cache/*
