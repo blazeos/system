@@ -31,4 +31,6 @@ chroot /opt/debian-aarch64/opt/sysroot "/Users/root/system/scripts/build_chroot.
 #unmount proc, sys, dev
 #rm -rf /opt/debian-aarch64/opt/sysroot/Users/root/system
 
+rm -rf /opt/debian-aarch64/opt/sysroot/Programs/blazeos/cache/*
+
 #pack the sysroot for distribution
