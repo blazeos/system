@@ -19,4 +19,10 @@ fi
 
 chroot /opt/debian-aarch64 "/opt/system/scripts/build.sh"
 
-#CHROOT TO NEWLY CREATED SYSROOT AND CONTINUE THE BUILD
+git clone https://github.com/blazeos/system.git /opt/debian-aarch64/opt/sysroot/Users/root/system
+
+chroot /opt/debian-aarch64/opt/sysroot "/opt/system/scripts/build_chroot.sh"
+
+#rm -rf /opt/debian-aarch64/opt/sysroot/Users/root/system
+
+#pack the sysroot for distribution
