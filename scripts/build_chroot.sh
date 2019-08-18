@@ -1,6 +1,7 @@
 #!/bin/sh
 
 blaze install m4
+blaze install perl
 blaze install bison
 blaze install flex
 blaze install pkg-config
