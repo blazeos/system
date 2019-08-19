@@ -10,7 +10,7 @@ link_files () {
 
 #FETCH NEEDED TOOLS
 apt-get update
-apt-get install -y locales dialog gcc gcc-8-arm-linux-gnueabihf gawk bison wget patch build-essential u-boot-tools bc vboot-kernel-utils libncurses5-dev g++-arm-linux-gnueabihf flex texinfo unzip help2man libtool-bin python3 git nano kmod pkg-config autogen autopoint gettext libnl-cli-3-dev
+apt-get install -y locales dialog gcc gcc-8-arm-linux-gnueabihf gawk bison wget patch build-essential u-boot-tools bc vboot-kernel-utils libncurses5-dev g++-arm-linux-gnueabihf flex texinfo unzip help2man libtool-bin python3 git nano kmod pkg-config autogen autopoint gettext libnl-cli-3-dev libssl-dev
 
 #CREATE DIR STRUCTURE
 rm -fr /opt/sysroot
