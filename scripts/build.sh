@@ -144,7 +144,7 @@ rm -fr /tmp/busybox
 
 link_files /System/Index/Binaries /Programs/busybox/1.30.1/bin
 
-rm -f /opt/busybox-1.30.1
+rm -rf /opt/busybox-1.30.1
 
 #GLIBC
 cd /opt
