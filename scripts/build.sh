@@ -224,7 +224,6 @@ cd build
   --host=$HOST \
   --target=$HOST \
   --with-sysroot=/ \
-  --with-float=hard \
   --prefix=/ \
   --enable-threads=posix \
   --enable-languages=c,c++ \
@@ -241,7 +240,7 @@ cd build
   --disable-libmpx \
   --disable-gold \
   --enable-long-long \
-  --disable-static
+  --disable-static $FLOAT
 
 make -j$(nproc)
 make install DESTDIR=/opt/sysroot/Programs/gcc/8.3.0
