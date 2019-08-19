@@ -34,6 +34,7 @@ if [ $(arch) = "aarch64" ]; then
   export FLOAT="--with-float=hard"
   wget -O /opt/kernel.tar.gz https://chromium.googlesource.com/chromiumos/third_party/kernel/+archive/86596f58eadf.tar.gz
   tar xfv /opt/kernel.tar.gz -C /opt/kernel
+  rm -f /opt/kernel.tar.gz
   cd /opt/kernel
   patch -p1 < /opt/system/patches/linux-3.18-log2.patch
   patch -p1 < /opt/system/patches/linux-3.18-hide-legacy-dirs.patch
@@ -73,7 +74,7 @@ if [ $(arch) = "aarch64" ]; then
   cp -rv /tmp/headers/include/* /opt/sysroot/Programs/kernel-aarch64/3.18.0-19095-g86596f58eadf/headers
   rm -fr /tmp/headers
   find /opt/sysroot/Programs/kernel-aarch64/3.18.0-19095-g86596f58eadf/headers \( -name .install -o -name ..install.cmd \) -delete
-  link_files /System/Index/Includes /Programs/kernel-aarch64/3.18.0-19095-g86596f58eadf/headers  
+  link_files /System/Index/Includes /Programs/kernel-aarch64/3.18.0-19095-g86596f58eadf/headers
 else
   export HOST="x86_64-linux-gnu"
   export WIFIVERSION=
@@ -81,6 +82,7 @@ else
   export FLOAT=""
   wget https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.2.3.tar.xz
   tar xfv /opt/linux-5.2.3.tar.xz -C /opt/kernel
+  rm -f /opt/linux-5.2.3.tar.xz
   cd /opt/kernel/linux-5.2.3
   #patch -p1 < /opt/PowerOS/patches/linux-3.18-log2.patch
   #patch -p1 < /opt/PowerOS/patches/linux-3.18-hide-legacy-dirs.patch
@@ -113,10 +115,13 @@ else
   link_files /System/Index/Includes /Programs/kernel-amd64/5.2.3/headers  
 fi
 
+rm -rf /opt/kernel
+
 #BUSYBOX:
 cd /opt
 wget https://busybox.net/downloads/busybox-1.30.1.tar.bz2
 tar xfv busybox-1.30.1.tar.bz2
+rm -f busybox-1.30.1.tar.bz2
 cd busybox-1.30.1
 cp /opt/system/config/config.busybox .config
 
@@ -139,10 +144,13 @@ rm -fr /tmp/busybox
 
 link_files /System/Index/Binaries /Programs/busybox/1.30.1/bin
 
+rm -f /opt/busybox-1.30.1
+
 #GLIBC
 cd /opt
 wget https://mirrors.dotsrc.org/gnu/glibc/glibc-2.29.tar.xz
 tar xfv glibc-2.29.tar.xz
+rm -f glibc-2.29.tar.xz
 cd glibc-2.29
 mkdir build
 cd build
@@ -181,10 +189,13 @@ link_files /System/Index/Includes /Programs/glibc/2.29/include
 link_files /System/Index/Libraries /Programs/glibc/2.29/lib
 link_files /System/Index/Binaries /Programs/glibc/2.29/sbin
 
+rm -rf /opt/glibc-2.29
+
 #BINUTILS
 cd /opt
 wget https://mirrors.dotsrc.org/gnu/binutils/binutils-2.32.tar.xz
 tar xfv binutils-2.32.tar.xz
+rm -f binutils-2.32.tar.xz
 cd binutils-2.32
 
 ./configure \
@@ -211,10 +222,13 @@ link_files /System/Index/Binaries /Programs/binutils/2.32/bin
 link_files /System/Index/Includes /Programs/binutils/2.32/include
 link_files /System/Index/Libraries /Programs/binutils/2.32/lib
 
+rm -rf /opt/binutils-2.32
+
 #GCC
 cd /opt
 wget ftp://ftp.fu-berlin.de/unix/languages/gcc/releases/gcc-8.3.0/gcc-8.3.0.tar.xz
 tar xfv gcc-8.3.0.tar.xz
+rm -f gcc-8.3.0.tar.xz
 cd gcc-8.3.0
 ./contrib/download_prerequisites
 mkdir build
@@ -256,10 +270,13 @@ link_files /System/Index/Includes /Programs/gcc/8.3.0/include
 link_files /System/Index/Libraries /Programs/gcc/8.3.0/lib
 link_files /System/Index/Libraries/libexec /Programs/gcc/8.3.0/libexec
 
+rm -rf /opt/gcc-8.3.0
+
 #make
 cd /opt
 wget http://ftp.twaren.net/Unix/GNU/gnu/make/make-4.2.1.tar.gz
 tar xfv make-4.2.1.tar.gz
+rm -f make-4.2.1.tar.gz
 cd make-4.2.1
 sed -i '211,217 d; 219,229 d; 232 d' glob/glob.c
 
@@ -276,6 +293,8 @@ rm -rf /opt/sysroot/Programs/make/4.2.1/share
 link_files /System/Index/Binaries /Programs/make/4.2.1/bin
 link_files /System/Index/Includes /Programs/make/4.2.1/include
 
+rm -rf /opt/make-4.2.1
+
 #blazeos
 git clone https://github.com/blazeos/packages.git /opt/sysroot/Programs/blazeos
 
@@ -286,6 +305,7 @@ if [ $(arch) = "aarch64" ]; then
   cd /opt
   wget https://gobolinux.org/older_downloads/GoboHide-0.14.tar.bz2
   tar xfv GoboHide-0.14.tar.bz2
+  rm -f GoboHide-0.14.tar.bz2
   cd GoboHide-0.14
   wget -O config.guess 'https://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=HEAD'
   wget -O config.sub 'https://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.sub;hb=HEAD'
@@ -299,6 +319,8 @@ if [ $(arch) = "aarch64" ]; then
   rm -rf /opt/sysroot/Programs/gobohide/0.14/{etc,share}
 
   link_files /System/Index/Binaries /Programs/gobohide/0.14/bin
+  
+  rm -rf /opt/GoboHide-0.14
 fi
 
 #STRIP BINARIES
