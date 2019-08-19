@@ -1,4 +1,6 @@
 #!/bin/sh
+set -e
+set -x
 
 #CONFIRMED WORKING ON DEBIAN 10 BUSTER
 
