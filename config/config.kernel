@@ -1362,7 +1362,7 @@ CONFIG_PREVENT_FIRMWARE_BUILD=y
 # Firmware loader
 #
 CONFIG_FW_LOADER=y
-#CONFIG_EXTRA_FIRMWARE="mrvl/sd8897_uapsta.bin mrvl/sd8797_uapsta.bin mrvl/sd8787_uapsta.bin"
+CONFIG_EXTRA_FIRMWARE=""
 #CONFIG_EXTRA_FIRMWARE_DIR="/opt/system/firmware"
 # CONFIG_FW_LOADER_USER_HELPER is not set
 # end of Firmware loader
