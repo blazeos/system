@@ -299,9 +299,6 @@ if [ $(arch) = "aarch64" ]; then
   rm -rf /opt/sysroot/Programs/gobohide/0.14/{etc,share}
 
   link_files /System/Index/Binaries /Programs/gobohide/0.14/bin
-else
-  echo "GoboHide 1.3"
-  #Install using blaze!
 fi
 
 #STRIP BINARIES
