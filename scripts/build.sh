@@ -31,6 +31,7 @@ if [ $(arch) = "aarch64" ]; then
   export HOST="arm-linux-gnueabihf"
   export WIFIVERSION=
   export HEADERS="/opt/sysroot/Programs/kernel-aarch64/3.18.0-19095-g86596f58eadf/headers"
+  export FLOAT="--with-float=hard"
   wget -O /opt/kernel.tar.gz https://chromium.googlesource.com/chromiumos/third_party/kernel/+archive/86596f58eadf.tar.gz
   tar xfv /opt/kernel.tar.gz -C /opt/kernel
   cd /opt/kernel
@@ -77,6 +78,7 @@ else
   export HOST="x86_64-linux-gnu"
   export WIFIVERSION=
   export HEADERS="/opt/sysroot/Programs/kernel-amd64/5.2.3/headers"
+  export FLOAT=""
   wget https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.2.3.tar.xz
   tar xfv /opt/linux-5.2.3.tar.xz -C /opt/kernel
   cd /opt/kernel/linux-5.2.3
@@ -189,7 +191,6 @@ cd binutils-2.32
   --host=$HOST \
   --prefix=/ \
   --with-sysroot=/ \
-  --with-float=hard \
   --disable-werror \
   --disable-multilib \
   --disable-sim \
@@ -199,7 +200,7 @@ cd binutils-2.32
   --enable-ld=default \
   --enable-gold=yes \
   --enable-threads \
-  --enable-plugins
+  --enable-plugins $FLOAT
   
 make tooldir=/ -j$(nproc)
 make tooldir=/ install DESTDIR=/opt/sysroot/Programs/binutils/2.32
