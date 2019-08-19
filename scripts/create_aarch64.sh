@@ -25,14 +25,14 @@ git clone https://github.com/blazeos/system.git /opt/debian-aarch64/opt/sysroot/
 
 cd /opt/debian-aarch64/opt/sysroot
 mount -t proc proc System/Kernel/Status/
-mount --rbind /sys System/Kernel/Hardware/
+#mount --rbind /sys System/Kernel/Hardware/
 mount --rbind /dev dev/
 
 chroot /opt/debian-aarch64/opt/sysroot "/Users/root/system/scripts/build_chroot.sh"
 
 cd /opt/debian-aarch64/opt/sysroot
 umount System/Kernel/Status/
-umount System/Kernel/Hardware/
+#umount System/Kernel/Hardware/
 umount dev/
 
 rm -rf /opt/debian-aarch64/opt/sysroot/Users/root/system
