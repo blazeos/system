@@ -281,7 +281,6 @@ cd make-4.2.1
 sed -i '211,217 d; 219,229 d; 232 d' glob/glob.c
 
 ./configure \
-  CFLAGS="--sysroot=/opt/sysroot" \
   --prefix=/ \
   --host=$HOST
 
