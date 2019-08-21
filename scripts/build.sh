@@ -295,6 +295,7 @@ link_files /System/Index/Includes /Programs/make/4.2.1/include
 rm -rf /opt/make-4.2.1
 
 #blazeos
+cd /opt
 git clone https://github.com/blazeos/packages.git /opt/sysroot/Programs/blazeos
 
 link_files /System/Index/Binaries /Programs/blazeos/bin
