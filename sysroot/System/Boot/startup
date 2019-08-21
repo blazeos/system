@@ -36,7 +36,7 @@ grep -h MODALIAS /System/Kernel/Hardware/bus/*/devices/*/uevent 2> /dev/null | c
 crond -c /System/Settings/crond
 
 #Hide all legacy directories
-gobohide -h /bin /boot /etc /lib /libexec /media /mnt /lost\+found /proc /sbin /share /sys /tmp /var /dev /usr /include
+gobohide -h /bin /boot /etc /lib /lib32 /lib64 /libexec /media /mnt /lost\+found /proc /sbin /share /sys /tmp /var /dev /usr /include
 
 #Start all network interfaces
 ifup -a
