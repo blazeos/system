@@ -1,4 +1,6 @@
 #!/bin/sh
+set -e
+set -x
 
 blaze install m4
 blaze install perl
