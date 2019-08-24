@@ -260,10 +260,7 @@ make -j$(nproc)
 make install DESTDIR=/opt/sysroot/Programs/gcc/8.3.0
 rm -rf /opt/sysroot/Programs/gcc/8.3.0/share
 ln -s 8.3.0 /opt/sysroot/Programs/gcc/current
-
-if [ $(arch) = "aarch64" ]; then
-  ln -s arm-linux-gnueabihf-gcc /opt/sysroot/Programs/gcc/8.3.0/bin/cc
-fi
+ln -s gcc /opt/sysroot/Programs/gcc/8.3.0/bin/cc
 
 link_files /System/Index/Binaries /Programs/gcc/8.3.0/bin
 link_files /System/Index/Includes /Programs/gcc/8.3.0/include
