@@ -343,6 +343,8 @@ rm -rf /opt/sysroot/Programs/m4/1.4.18/share
 
 link_files /System/Index/Binaries /Programs/m4/1.4.18/bin
 
+rm -rf /opt/m4-1.4.18
+
 #STRIP BINARIES
 find /opt/sysroot/Programs/*/current/bin -executable -type f | xargs arm-linux-gnueabihf-strip -s || true
 find /opt/sysroot/Programs/*/current/sbin -executable -type f | xargs arm-linux-gnueabihf-strip -s || true
