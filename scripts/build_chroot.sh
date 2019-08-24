@@ -3,11 +3,11 @@ set -e
 set -x
 
 blaze install perl
+blaze install flex
 blaze install bison
 blaze install zlib
 blaze install openssl
 blaze install ca-certificates
-blaze install flex
 blaze install pkg-config
 blaze install libnl
 blaze install iw
