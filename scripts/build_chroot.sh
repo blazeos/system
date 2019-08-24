@@ -2,7 +2,6 @@
 set -e
 set -x
 
-blaze install m4
 blaze install perl
 blaze install bison
 blaze install zlib
