@@ -323,6 +323,26 @@ if [ $(arch) = "aarch64" ]; then
   rm -rf /opt/GoboHide-0.14
 fi
 
+#m4
+cd /opt
+wget https://ftp.gnu.org/gnu/m4/m4-1.4.18.tar.xz
+tar xfv m4-1.4.18.tar.xz
+rm -f m4-1.4.18.tar.xz
+cd m4-1.4.18
+sed -i 's/IO_ftrylockfile/IO_EOF_SEEN/' lib/*.c
+echo "#define _IO_IN_BACKUP 0x100" >> lib/stdio-impl.h
+
+./configure \
+  --host=$HOST \
+  --prefix=/
+
+make -j$(nproc)
+make install DESTDIR=/opt/sysroot/Programs/m4/1.4.18
+ln -s 1.4.18 /opt/sysroot/Programs/m4/current
+rm -rf /opt/sysroot/Programs/m4/1.4.18/share
+
+link_files /System/Index/Binaries /Programs/m4/1.4.18/bin
+
 #STRIP BINARIES
 find /opt/sysroot/Programs/*/current/bin -executable -type f | xargs arm-linux-gnueabihf-strip -s || true
 find /opt/sysroot/Programs/*/current/sbin -executable -type f | xargs arm-linux-gnueabihf-strip -s || true
