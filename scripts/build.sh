@@ -239,6 +239,7 @@ cd build
   --target=$HOST \
   --with-sysroot=/ \
   --prefix=/ \
+  --libdir=/lib \
   --enable-threads=posix \
   --enable-languages=c,c++ \
   --enable-__cxa_atexit \
