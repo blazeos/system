@@ -22,5 +22,6 @@ if [ ! $(arch) = "aarch64" ]; then
   blaze install autoconf
   blaze install automake
   blaze install gobohide 1.3
+  blaze install python3
   blaze install grub2
 fi
