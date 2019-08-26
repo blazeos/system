@@ -239,7 +239,6 @@ cd build
   --target=$HOST \
   --with-sysroot=/ \
   --prefix=/ \
-  --libdir=/lib \
   --enable-threads=posix \
   --enable-languages=c,c++ \
   --enable-__cxa_atexit \
@@ -266,6 +265,7 @@ ln -s gcc /opt/sysroot/Programs/gcc/8.3.0/bin/cc
 link_files /System/Index/Binaries /Programs/gcc/8.3.0/bin
 link_files /System/Index/Includes /Programs/gcc/8.3.0/include
 link_files /System/Index/Libraries /Programs/gcc/8.3.0/lib
+link_files /System/Index/Libraries /Programs/gcc/8.3.0/lib64
 link_files /System/Index/Libraries/libexec /Programs/gcc/8.3.0/libexec
 
 rm -rf /opt/gcc-8.3.0
